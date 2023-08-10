@@ -14,28 +14,31 @@ require 'set'
 # p two_sum?(arr, 6) # => should be true
 # p two_sum?(arr, 10) # => should be false
 
+# TC:  n log n
 def sort_two_sum?(arr, target_sum)
     arr.sort!
-    range = (0...arr.length)
-    mid = arr.length / 2
-    if arr[mid] < target_sum
-        arr.take(mid)
-    else
-        arr.take(mid)
-    end
-end
-
-
-# O(n)
-def set_two_sum?(arr, target_sum)
-    set = Set.new
-    arr.each do |el|
+    arr.each_with_index do |el, i|
         complement = target_sum - el
-        set.include?(complement) ? true : set.add(el)
+        idx = arr.bsearch_index {|el| el == complement}
+        return true if i != idx && !idx.nil?
     end
     false
 end
 
 arr = [0, 1, 5, 7]
-p set_two_sum?(arr, 6) # => should be true
-p set_two_sum?(arr, 10) # => should be false
+p sort_two_sum?(arr, 6) # => should be true
+p sort_two_sum?(arr, 10) # => should be false
+
+# O(n)
+# def set_two_sum?(arr, target_sum)
+#     set = Set.new
+#     arr.each do |el|
+#         complement = target_sum - el
+#         set.include?(complement) ? true : set.add(el)
+#     end
+#     false
+# end
+
+# arr = [0, 1, 5, 7]
+# p set_two_sum?(arr, 6) # => should be true
+# p set_two_sum?(arr, 10) # => should be false
